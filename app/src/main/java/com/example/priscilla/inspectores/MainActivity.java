@@ -7,22 +7,44 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.view.MenuItem;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    String user, pass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //se define la estructura de datos que identifica al Usuario.
+        final EditText etUser = (EditText)findViewById(R.id.User_ID);
+        final EditText etPass = (EditText)findViewById(R.id.Pass);
+
         Button unpButton = (Button) findViewById(R.id.pButton);
         unpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //se setean los parametros del usuario para validar
+                user=etUser.getText().toString();
+                pass=etPass.getText().toString();
+                String dataUser[]={user,pass};
+                //Se envia informacion del usuario para validar sus credenciales
+                Intent openIntent=new Intent(MainActivity.this, verificacionLogin.class);
+                openIntent.putExtra("dataUser", dataUser);
+                startActivityForResult(openIntent,1);
 
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
