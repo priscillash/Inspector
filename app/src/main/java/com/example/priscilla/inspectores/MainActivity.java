@@ -9,7 +9,6 @@ import android.widget.Button;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +43,27 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            //Las credenciales del usuario son validas
+            if(resultCode == RESULT_OK){
+                Bundle bundExtra=data.getExtras();
+                String token=bundExtra.getString("tokenSession");
+                String userLoged=bundExtra.getString("userLoged");
+                //Se envia datos a la actividad de Consulta de Infracciones.
+                Intent openIntent=new Intent(MainActivity.this, ConsultarInfraccionesActivity.class);
+                openIntent.putExtra("tokenSession", token);
+                openIntent.putExtra("UserLoged", userLoged);
+                startActivity(openIntent);
+            }
+            //Las credenciales del usuario no son validas
+            if (resultCode == RESULT_CANCELED) {
+                String errorLogin=getResources().getString(R.string.errorLoginMsg).toString();
+                Toast.makeText(MainActivity.this,errorLogin, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override

@@ -7,5 +7,6 @@
     <string name="Gestion_Estacionamiento">Gestión de Estacionamiento</string>
     <string name="User_ID">User Id</string>
     <string name="Password">Password</string>
+    <string name="errorLoginMsg">Usuario y/o contraseña incorrecto. Por favor intente nuevamente.</string>
 
 </resources>
