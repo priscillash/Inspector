@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
                 String token=bundExtra.getString("tokenSession");
                 String userLoged=bundExtra.getString("userLoged");
                 //Se envia datos a la actividad de Consulta de Infracciones.
-                Intent openIntent=new Intent(MainActivity.this, ConsultarInfraccionesActivity.class);
+                Intent openIntent=new Intent(MainActivity.this, ConsultaInfraccion.class);
                 openIntent.putExtra("tokenSession", token);
                 openIntent.putExtra("UserLoged", userLoged);
                 startActivity(openIntent);

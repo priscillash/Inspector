@@ -1,6 +1,7 @@
 package com.example.priscilla.inspectores;
 
 import java.util.Locale;
+import java.lang.Object;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -9,7 +10,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -22,7 +23,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class ConsultarInfraccionesActivity extends Activity {
     private String[] mPlanetTitles;
@@ -53,6 +53,7 @@ public class ConsultarInfraccionesActivity extends Activity {
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
+
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* drawer_layout object */
@@ -70,6 +71,7 @@ public class ConsultarInfraccionesActivity extends Activity {
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
