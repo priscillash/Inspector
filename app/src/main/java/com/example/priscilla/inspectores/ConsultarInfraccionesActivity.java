@@ -55,7 +55,7 @@ public class ConsultarInfraccionesActivity extends Activity {
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
+                mDrawerLayout,         /* drawer_layout object */
                 R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
                 R.string.drawer_close  /* "close drawer" description for accessibility */

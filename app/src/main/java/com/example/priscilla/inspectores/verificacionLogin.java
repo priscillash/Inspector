@@ -13,7 +13,7 @@ public class verificacionLogin extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         String dataUser[];
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.DrawerLayout);
+        setContentView(R.layout.drawer_layout);
 
         Bundle bundle = getIntent().getExtras();
         dataUser = bundle.getStringArray("dataUser");
