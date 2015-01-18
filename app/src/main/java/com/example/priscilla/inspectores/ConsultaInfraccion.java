@@ -1,22 +1,27 @@
 package com.example.priscilla.inspectores;
 
-import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.ListView;
+import android.widget.Toast;
+import android.support.v4.app.FragmentManager;
 
 
 public class ConsultaInfraccion extends ActionBarActivity
@@ -50,24 +55,33 @@ public class ConsultaInfraccion extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
+        Fragment  fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new fragment_consulta();
                 mTitle = getString(R.string.title_section1);
                 break;
-            case 2:
+            case 1:
+                fragment = new fragment_historico();
                 mTitle = getString(R.string.title_section2);
                 break;
-            case 3:
+            case 2:
+                fragment = new fragment_logout();
                 mTitle = getString(R.string.title_section3);
                 break;
         }
+
+        if (fragment != null){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment)
+                    .commit();
+        }
+
+    }
+
+    public void onSectionAttached(int number) {
+
     }
 
     public void restoreActionBar() {
