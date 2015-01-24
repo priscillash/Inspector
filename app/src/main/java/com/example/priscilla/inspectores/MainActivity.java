@@ -50,11 +50,11 @@ public class MainActivity extends ActionBarActivity {
             //Las credenciales del usuario son validas
             if(resultCode == RESULT_OK){
                 Bundle bundExtra=data.getExtras();
-                String token=bundExtra.getString("tokenSession");
+                //String token=bundExtra.getString("tokenSession");
                 String userLoged=bundExtra.getString("userLoged");
                 //Se envia datos a la actividad de Consulta de Infracciones.
                 Intent openIntent=new Intent(MainActivity.this, ConsultaInfraccion.class);
-                openIntent.putExtra("tokenSession", token);
+                //openIntent.putExtra("tokenSession", token);
                 openIntent.putExtra("UserLoged", userLoged);
                 startActivity(openIntent);
             }
