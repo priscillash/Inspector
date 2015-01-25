@@ -41,7 +41,7 @@ public class verificacionLogin extends Activity {
 
     private class WebServiceTask extends AsyncTask<String, Integer, Boolean> {
 
-        private static final String SERVICE_URL = "http://192.168.1.46:8081/RestWebService/rest/person";
+        private static final String SERVICE_URL = "http://192.168.1.47:8081/RestWebService/rest/person";
         private static final String TAG = "verificacionLogin";
         String sampleURL = SERVICE_URL + "/demo";
         private ProgressDialog progressDialog=null;

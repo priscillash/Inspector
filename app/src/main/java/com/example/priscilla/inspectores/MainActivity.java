@@ -13,15 +13,21 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.util.Log;
 
 
 public class MainActivity extends ActionBarActivity {
 
     String user, pass;
+    private static final String TAG_INI = "Iniciando Main Activity";
+    private static final String TAG_DEST = "Finalizando Main Activity ";
+    private static final String TAG ="Main Activity";
+    private static final String KEY_INDEX = "Index";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG_INI,"onCreate(Bundle) called");
         setContentView(R.layout.activity_main);
 
         //se define la estructura de datos que identifica al Usuario.
@@ -88,5 +94,10 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        Log.d(TAG_DEST,"onDestroy() called");
+    }
 
 }
