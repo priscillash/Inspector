@@ -34,10 +34,38 @@ public class verificacionLogin extends Activity {
         user = dataUser[0];
         pass = dataUser[1];
 
-        WebServiceTask wst = new WebServiceTask();
-        wst.execute(user);
+        //PARA CORRER CON SERVIDOR SE DEBE QUITAR!!!!
+
+        if (user.equals("user") && pass.equals("pass")) {
+            //Genero Token para mantener la sesión.
+            //String token;
+            //SessionIdentifierGenerator sessionId = new SessionIdentifierGenerator();
+            //token = sessionId.nextSessionId();
+            //Toast.makeText(verificacionLogin.this, token, Toast.LENGTH_LONG).show();
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("userLoged", user);
+            setResult(RESULT_OK, returnIntent);
+            finish();
+
+
+        } else {
+
+            Intent returnIntent = new Intent();
+            setResult(RESULT_CANCELED, returnIntent);
+            finish();
+
+        }
+
+        //PARA CORRER CON SERVIDOR AGREGAR!!!!!
+
+       // WebServiceTask wst = new WebServiceTask();
+       //wst.execute(user);
 
     }
+
+
+    /*
+    PARA CORRER CON SERVIDOR AGREGAR!!!!!!
 
     private class WebServiceTask extends AsyncTask<String, Integer, Boolean> {
 
@@ -120,7 +148,10 @@ public class verificacionLogin extends Activity {
             }
 
         }
+
     }
+
+    */
 }
 
 

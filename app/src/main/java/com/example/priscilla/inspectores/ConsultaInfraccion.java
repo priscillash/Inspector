@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v4.app.FragmentManager;
+import android.app.FragmentTransaction;
 
 
 public class ConsultaInfraccion extends ActionBarActivity
@@ -68,15 +69,17 @@ public class ConsultaInfraccion extends ActionBarActivity
             case 2:
                 fragment = new fragment_logout();
                 mTitle = getString(R.string.title_section3);
-                break;
         }
 
         if (fragment != null){
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, fragment)
+                    .addToBackStack(mTitle.toString())
                     .commit();
+
         }
+
 
     }
 
