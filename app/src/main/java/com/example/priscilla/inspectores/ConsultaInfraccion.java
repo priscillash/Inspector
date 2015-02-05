@@ -1,5 +1,7 @@
 package com.example.priscilla.inspectores;
 
+import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -23,6 +25,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v4.app.FragmentManager;
 import android.app.FragmentTransaction;
+import com.example.priscilla.inspectores.dialog_logout;
 
 
 public class ConsultaInfraccion extends ActionBarActivity
@@ -45,7 +48,6 @@ public class ConsultaInfraccion extends ActionBarActivity
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -57,6 +59,7 @@ public class ConsultaInfraccion extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         Fragment  fragment = null;
+        dialog_logout dialog = null;
         switch (position) {
             case 0:
                 fragment = new fragment_consulta();
@@ -67,8 +70,7 @@ public class ConsultaInfraccion extends ActionBarActivity
                 mTitle = getString(R.string.title_section2);
                 break;
             case 2:
-                fragment = new fragment_logout();
-                mTitle = getString(R.string.title_section3);
+                showDialog();
         }
 
         if (fragment != null){
@@ -82,6 +84,23 @@ public class ConsultaInfraccion extends ActionBarActivity
 
 
     }
+    public void showDialog() {
+        //FragmentManager fm = getSupportFragmentManager();
+        dialog_logout newFragment = dialog_logout.newInstance(R.string.desea_cerrar_sesión);
+        newFragment.show(getFragmentManager(), "dialog");
+    }
+
+    public void doPositiveClick() {
+        Intent openIntent = new Intent(this, MainActivity.class);
+        startActivity(openIntent);
+
+    }
+
+    public void doNegativeClick() {
+
+    }
+
+
 
     public void onSectionAttached(int number) {
 

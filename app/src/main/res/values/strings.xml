@@ -24,5 +24,7 @@
     <string name="deseo_cerrar_sesión">Cerrar Sesión</string>
     <string name="cancelar">Cancelar</string>
     <string name="car_number">Matricula</string>
+    <string name="alert_dialog_ok">Ok</string>
+    <string name="alert_dialog_cancel">Cancelar</string>
 
 </resources>
