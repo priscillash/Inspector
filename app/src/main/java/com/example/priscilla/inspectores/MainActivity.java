@@ -1,5 +1,6 @@
 package com.example.priscilla.inspectores;
 
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.content.Intent;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
 
@@ -49,6 +51,8 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -93,6 +97,9 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
     @Override
     public void onDestroy(){

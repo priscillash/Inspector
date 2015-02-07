@@ -142,6 +142,12 @@ public class ConsultaInfraccion extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        showDialog();
+    }
+
+
     /**
      * A placeholder fragment containing a simple view.
      */

@@ -26,5 +26,7 @@
     <string name="car_number">Matricula</string>
     <string name="alert_dialog_ok">Ok</string>
     <string name="alert_dialog_cancel">Cancelar</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>
