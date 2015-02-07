@@ -91,7 +91,9 @@ public class ConsultaInfraccion extends ActionBarActivity
     }
 
     public void doPositiveClick() {
+
         Intent openIntent = new Intent(this, MainActivity.class);
+        openIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(openIntent);
 
     }
