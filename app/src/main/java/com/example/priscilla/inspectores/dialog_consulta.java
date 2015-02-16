@@ -8,15 +8,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 
-public class  dialog_logout extends DialogFragment{
+public class  dialog_consulta extends DialogFragment{
 
-
-    public dialog_logout() {
+    public dialog_consulta() {
         // Required empty public constructor
     }
 
-    public static dialog_logout newInstance(int title) {
-        dialog_logout frag = new dialog_logout();
+    public static dialog_consulta newInstance(int title) {
+        dialog_consulta frag = new dialog_consulta();
         Bundle args = new Bundle();
         args.putInt("title", title);
         //args.putString(title, "title");
@@ -30,10 +29,12 @@ public class  dialog_logout extends DialogFragment{
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle(title)
+                .setMessage("Desea tomar una foto?")
+                .setIcon(R.drawable.ic_action_camera)
                 .setPositiveButton(R.string.alert_dialog_ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                ((ConsultaInfraccion)getActivity()).doPositiveClick();
+                                ((ConsultaInfraccion)getActivity()).doCameraPositiveClick();
                             }
                         }
                 )

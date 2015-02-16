@@ -28,5 +28,12 @@
     <string name="alert_dialog_cancel">Cancelar</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="tomar_fotografia">Foto</string>
+    <string name="ingreso_matricula">Ingresar Matrícula</string>
+    <string name="Letras">Letras</string>
+    <string name="Numeros">Números</string>
+    <string name="Letras_ejemplo">Ej: HHH</string>
+    <string name="Numeros_ejemplo">Ej: 1111</string>
+    <string name="Vehiculo_en_Infraccion">Vehículo en Infracción</string>
 
 </resources>

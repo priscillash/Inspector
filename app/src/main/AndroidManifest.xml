@@ -4,15 +4,20 @@
 
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:configChanges="orientation|screenSize|keyboardHidden"
         android:theme="@style/Theme.AppCompat.Light" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,11 +26,13 @@
         </activity>
         <activity
             android:name=".ConsultaInfraccion"
-            android:label="@string/title_activity_consulta_infraccion" >
+            android:label="@string/title_activity_consulta_infraccion"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
         <activity
             android:name=".verificacionLogin"
-            android:label="@string/title_activity_consulta_infraccion" >
+            android:label="@string/title_activity_consulta_infraccion"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

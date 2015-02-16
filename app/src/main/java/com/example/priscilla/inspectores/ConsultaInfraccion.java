@@ -98,7 +98,16 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     }
 
+    public void doCameraPositiveClick() {
+
+        Intent openIntent = new Intent(this, Camara.class);
+        openIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(openIntent);
+
+    }
+
     public void doNegativeClick() {
+
 
     }
 
