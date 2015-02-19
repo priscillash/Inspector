@@ -111,6 +111,25 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     }
 
+    public void consulta(String letras, String numeros){
+
+        String qletras = letras;
+        String qnumeros = numeros;
+        String mTitle = getString(R.string.title_section1);
+
+
+        fragment_consultaResultado newFragment = fragment_consultaResultado.newInstance(qletras,qnumeros);
+
+        if (newFragment != null){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, newFragment)
+                    .addToBackStack(mTitle)
+                    .commit();
+
+        }
+    }
+
 
 
     public void onSectionAttached(int number) {
