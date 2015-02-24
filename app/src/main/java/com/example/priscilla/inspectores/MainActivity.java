@@ -1,17 +1,23 @@
 package com.example.priscilla.inspectores;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Outline;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.Button;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
@@ -31,12 +37,20 @@ public class MainActivity extends ActionBarActivity {
         Log.d(TAG_INI,"onCreate(Bundle) called");
         setContentView(R.layout.activity_main);
 
+        custom_button unpButton = new custom_button.Builder(this)
+                .withDrawable(getResources().getDrawable(R.drawable.ic_action_forward))
+                .withButtonColor(Color.MAGENTA)
+                .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
+                .withMargins(0, 0, 16, 16)
+                .create();
+
+
         //se define la estructura de datos que identifica al Usuario.
         final EditText etUser = (EditText)findViewById(R.id.User_ID);
         final EditText etPass = (EditText)findViewById(R.id.Pass);
 
-        Button unpButton = (Button) findViewById(R.id.pButton);
-        unpButton.setOnClickListener(new View.OnClickListener() {
+
+        unpButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 //se setean los parametros del usuario para validar

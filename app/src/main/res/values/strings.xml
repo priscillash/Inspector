@@ -35,5 +35,6 @@
     <string name="Letras_ejemplo">Ej: HHH</string>
     <string name="Numeros_ejemplo">Ej: 1111</string>
     <string name="Vehiculo_en_Infraccion"> Vehículo en Infracción</string>
+    <string name="descLogo">Logo de la aplicación</string>
 
 </resources>
