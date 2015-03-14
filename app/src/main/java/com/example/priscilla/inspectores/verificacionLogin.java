@@ -36,6 +36,8 @@ public class verificacionLogin extends Activity {
 
         //PARA CORRER CON SERVIDOR SE DEBE QUITAR!!!!
 
+        /*
+
         if (user.equals("user") && pass.equals("pass")) {
             //Genero Token para mantener la sesión.
             //String token;
@@ -55,17 +57,15 @@ public class verificacionLogin extends Activity {
             finish();
 
         }
+        */
 
-        //PARA CORRER CON SERVIDOR AGREGAR!!!!!
 
-       // WebServiceTask wst = new WebServiceTask();
-       //wst.execute(user);
+        WebServiceTask wst = new WebServiceTask();
+        wst.execute(user);
 
     }
 
 
-    /*
-    PARA CORRER CON SERVIDOR AGREGAR!!!!!!
 
     private class WebServiceTask extends AsyncTask<String, Integer, Boolean> {
 
@@ -151,7 +151,6 @@ public class verificacionLogin extends Activity {
 
     }
 
-    */
 }
 
 

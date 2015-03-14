@@ -24,6 +24,7 @@ import android.widget.FrameLayout;
 
 /**
  * TODO: document your custom view class.
+ * http://www.androidcookbook.com/Recipe.seam?recipeId=3307!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  */
 public class custom_button extends View {
 

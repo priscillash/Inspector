@@ -30,6 +30,7 @@ public class MainActivity extends ActionBarActivity {
     private static final String TAG_DEST = "Finalizando Main Activity ";
     private static final String TAG ="Main Activity";
     private static final String KEY_INDEX = "Index";
+    public static final int MY_COLOR = Color.rgb(12,111,183);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
 
         custom_button unpButton = new custom_button.Builder(this)
                 .withDrawable(getResources().getDrawable(R.drawable.ic_action_forward))
-                .withButtonColor(Color.MAGENTA)
+                .withButtonColor(MY_COLOR)
                 .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
                 .withMargins(0, 0, 16, 16)
                 .create();
