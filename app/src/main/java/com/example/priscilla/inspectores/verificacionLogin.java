@@ -14,11 +14,12 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 public class verificacionLogin extends Activity {
     String user, pass;
-    String userResponse;
-    String passResponse;
+    int errorResponse;
+    String tokenSessionResponse;
     boolean resultado;
 
     @Override
@@ -69,16 +70,17 @@ public class verificacionLogin extends Activity {
 
     private class WebServiceTask extends AsyncTask<String, Integer, Boolean> {
 
-        private static final String SERVICE_URL = "http://192.168.1.47:8081/RestWebService/rest/person";
+        private static final String SERVICE_URL = "http://192.168.1.46:14530/BQParkServices/estacionamientoBQParkInspector/LoginInspector";
         private static final String TAG = "verificacionLogin";
-        String sampleURL = SERVICE_URL + "/demo";
+        private static final String imei = "/imei";
+        String url = SERVICE_URL + "/"+ user +"/"+pass + imei;
         private ProgressDialog progressDialog=null;
 
         @Override
         protected Boolean doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
 
-            HttpGet del = new HttpGet(sampleURL);
+            HttpGet del = new HttpGet(url);
             del.setHeader("content-type", "application/json");
 
             try {
@@ -87,20 +89,16 @@ public class verificacionLogin extends Activity {
                 String respStr = EntityUtils.toString(resp.getEntity());
                 JSONObject respJSON = new JSONObject(respStr);
 
-                userResponse = respJSON.getString("userName");
-                passResponse = respJSON.getString("txtPass");
+                errorResponse = respJSON.getInt("codigoError");
+                System.out.println(errorResponse);
 
-                if (user.equals(userResponse) && pass.equals(passResponse)) {
-                    //Genero Token para mantener la sesión.
-                    //String token;
-                    //SessionIdentifierGenerator sessionId = new SessionIdentifierGenerator();
-                    //token = sessionId.nextSessionId();
-                    //Toast.makeText(verificacionLogin.this, token, Toast.LENGTH_LONG).show();
-
+                if (errorResponse == 200){
+                    tokenSessionResponse = respJSON.getString("respuesta");
+                    System.out.println(tokenSessionResponse);
                     resultado=true;
 
-
-                } else {
+                }
+                else {
 
                     resultado= false;
 
@@ -111,6 +109,11 @@ public class verificacionLogin extends Activity {
                 resultado = false;
             }
             return resultado;
+        }
+
+        public String getToken(){
+
+            return tokenSessionResponse;
         }
 
         @Override
@@ -137,7 +140,8 @@ public class verificacionLogin extends Activity {
             if (result){
                 Intent returnIntent = new Intent();
                 //returnIntent.putExtra("tokenSession", token);
-                returnIntent.putExtra("userLoged", user);
+                returnIntent.putExtra("token", tokenSessionResponse);
+                returnIntent.putExtra("userLogged",user);
                 setResult(RESULT_OK, returnIntent);
                 finish();
             }
