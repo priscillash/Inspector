@@ -67,10 +67,10 @@ public class fragment_consulta extends Fragment  {
             @Override
             public void onClick(View v) {
                 //se setean los parametros del usuario para validar
-                letras = etLetras.getText().toString();
-                numeros = etNumeros.getText().toString();
-                String matricula[]= {letras, numeros};
-                ((ConsultaInfraccion)getActivity()).consulta(letras,numeros);
+                letras = etLetras.getText().toString().toUpperCase();
+                numeros = etNumeros.getText().toString().toUpperCase();
+                String matricula = letras + numeros;
+                ((ConsultaInfraccion)getActivity()).consulta(matricula);
 
             }
         });

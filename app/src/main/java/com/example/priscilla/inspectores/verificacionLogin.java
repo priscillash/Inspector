@@ -111,10 +111,7 @@ public class verificacionLogin extends Activity {
             return resultado;
         }
 
-        public String getToken(){
 
-            return tokenSessionResponse;
-        }
 
         @Override
         protected void onPreExecute() {
@@ -130,7 +127,7 @@ public class verificacionLogin extends Activity {
         protected void onProgressUpdate(Integer... progress){
             super.onProgressUpdate(progress);
 
-            progressDialog.show(verificacionLogin.this,"wait","Iniciando sesión");
+            progressDialog.show(verificacionLogin.this,"Espere","Iniciando sesión");
 
         }
 

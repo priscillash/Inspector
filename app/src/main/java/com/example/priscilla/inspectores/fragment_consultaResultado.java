@@ -1,27 +1,27 @@
 package com.example.priscilla.inspectores;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+
 public class fragment_consultaResultado extends Fragment {
 
 
-    private String mletras;
-    private String mnumeros;
+    String matricula;
+    Boolean multa;
 
 
-    public static fragment_consultaResultado newInstance(String param1, String param2) {
+    public static fragment_consultaResultado newInstance(String param1, Boolean param2) {
         fragment_consultaResultado fragment = new fragment_consultaResultado();
         Bundle args = new Bundle();
-        args.putString("letras", param1);
-        args.putString("numeros", param2);
+        args.putString("matricula", param1);
+        args.putBoolean("multa", param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,8 +34,9 @@ public class fragment_consultaResultado extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mletras = getArguments().getString("letras");
-            mnumeros = getArguments().getString("numeros");
+            matricula = getArguments().getString("matricula");
+            multa = getArguments().getBoolean("multa");
+
         }
 
     }
@@ -45,9 +46,10 @@ public class fragment_consultaResultado extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_consulta_resultado, container, false);
         TextView vehiculo_matricula = (TextView) view.findViewById(R.id.vehiculo_matricula);
-        vehiculo_matricula.setText("Matrícula: ");
+        vehiculo_matricula.setText("Matrícula:" + matricula);
 
-        if (mletras.equals("HHH") && mnumeros.equals("1111")) {
+
+        if (!multa) {
             //No correspoonde infracción
             TextView vehiculo_infraccion = (TextView) view.findViewById(R.id.vehiculo_infraccion);
             vehiculo_infraccion.setText("No corresponde infracción");
@@ -61,9 +63,8 @@ public class fragment_consultaResultado extends Fragment {
 
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
+
+
+
 
 }

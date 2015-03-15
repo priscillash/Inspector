@@ -1,6 +1,8 @@
 package com.example.priscilla.inspectores;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
@@ -13,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,9 +30,28 @@ import android.support.v4.app.FragmentManager;
 import android.app.FragmentTransaction;
 import com.example.priscilla.inspectores.dialog_logout;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class ConsultaInfraccion extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+    private String userLogged;
+    private String tokenSession;
+
+    int errorResponse;
+    JSONObject consultaResponse;
+    Boolean resultado;
+    String matricula;
+    Boolean multa = true;
+
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -46,6 +68,14 @@ public class ConsultaInfraccion extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_infraccion);
 
+        Bundle unBundle = getIntent().getExtras();
+        if (unBundle != null){
+            userLogged=unBundle.getString("UserLoged");
+            tokenSession=unBundle.getString("tokenSession");
+            System.out.println("consulta" + tokenSession);
+
+        }
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
@@ -53,6 +83,11 @@ public class ConsultaInfraccion extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    public String getTokenSession(){
+
+        return tokenSession;
     }
 
     @Override
@@ -111,23 +146,12 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     }
 
-    public void consulta(String letras, String numeros){
+    public void consulta(String matricula){
 
-        String qletras = letras;
-        String qnumeros = numeros;
-        String mTitle = getString(R.string.title_section1);
+        this.matricula = matricula;
+        WstConsulta unwstConsulta = new WstConsulta();
+        unwstConsulta.execute(matricula);
 
-
-        fragment_consultaResultado newFragment = fragment_consultaResultado.newInstance(qletras,qnumeros);
-
-        if (newFragment != null){
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, newFragment)
-                    .addToBackStack(mTitle)
-                    .commit();
-
-        }
     }
 
 
@@ -215,6 +239,108 @@ public class ConsultaInfraccion extends ActionBarActivity
             super.onAttach(activity);
             ((ConsultaInfraccion) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
+        }
+    }
+
+
+    private class WstConsulta extends AsyncTask<String, Integer, Boolean> {
+
+        private static final String SERVICE_URL = "http://192.168.1.46:14530/BQParkServices/estacionamientoBQParkInspector/ConsultarPorMatricula";
+        String url = SERVICE_URL + "/" + tokenSession + "/" + matricula;
+        private ProgressDialog progressDialog = null;
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            HttpClient httpClient = new DefaultHttpClient();
+
+            HttpGet del = new HttpGet(url);
+            del.setHeader("content-type", "application/json");
+
+            try {
+                publishProgress();
+                HttpResponse resp = httpClient.execute(del);
+                String respStr = EntityUtils.toString(resp.getEntity());
+                JSONObject respJSON = new JSONObject(respStr);
+
+                errorResponse = respJSON.getInt("codigoError");
+                System.out.println(errorResponse);
+
+                if (errorResponse == 200) {
+                    consultaResponse = respJSON.getJSONObject("datosVariables");
+                    System.out.println(consultaResponse);
+                    String dateTimeConsulta = consultaResponse.getString("dateTime");
+                    System.out.println(dateTimeConsulta);
+                    String dateTimeEndTicket = consultaResponse.getString("dateTimeTicket");
+                    System.out.println(dateTimeEndTicket);
+
+                    if (dateTimeEndTicket != "null"){
+
+                        SimpleDateFormat fmt = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+                        Date dTConsulta = fmt.parse(dateTimeConsulta);
+                        System.out.println(dTConsulta);
+
+                        Date dTticket = fmt.parse(dateTimeEndTicket);
+                        System.out.println(dTticket);
+
+
+                        if (dTticket.before(dTConsulta)){
+                            System.out.println("Corresponde multa");
+                            multa = true;
+                        }else {
+                            System.out.println("No Corresponde multa");
+                             multa = false;
+                        }
+
+                    }
+
+                    resultado = true;
+
+                } else {
+
+                    resultado = false;
+
+                }
+
+            } catch (Exception ex) {
+                Log.e("ServicioRest", "Error!", ex);
+                resultado = false;
+            }
+            return resultado;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ConsultaInfraccion.this);
+            progressDialog.setCancelable(true);
+            progressDialog.setIndeterminate(true);
+
+        }
+
+
+        @Override
+        protected void onProgressUpdate(Integer... progress){
+            super.onProgressUpdate(progress);
+
+            progressDialog = ProgressDialog.show(ConsultaInfraccion.this,"Espere","Consultando");
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result){
+            progressDialog.dismiss();
+            if(result){
+                String mTitle = getString(R.string.title_section1);
+                fragment_consultaResultado newFragment =fragment_consultaResultado.newInstance(matricula,multa);
+                if (newFragment != null){
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, newFragment)
+                            .addToBackStack(mTitle.toString())
+                            .commit();
+                }
+
+            }
         }
     }
 
