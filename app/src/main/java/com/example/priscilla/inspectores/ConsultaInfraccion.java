@@ -35,9 +35,11 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -48,9 +50,11 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     int errorResponse;
     JSONObject consultaResponse;
+    JSONArray historicoResponse;
     Boolean resultado;
     String matricula;
     Boolean multa = true;
+    public ArrayList<Consulta> unalistaConsultas = new ArrayList<Consulta> ();
 
 
     /**
@@ -101,8 +105,9 @@ public class ConsultaInfraccion extends ActionBarActivity
                 mTitle = getString(R.string.title_section1);
                 break;
             case 1:
-                fragment = new fragment_historico();
+                //fragment = new fragment_historico();
                 mTitle = getString(R.string.title_section2);
+                historico();
                 break;
             case 2:
                 showDialog();
@@ -154,6 +159,12 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     }
 
+    public void historico(){
+
+        WstHistorico unwstHistorico= new WstHistorico();
+        unwstHistorico.execute(tokenSession);
+
+    }
 
 
     public void onSectionAttached(int number) {
@@ -343,5 +354,93 @@ public class ConsultaInfraccion extends ActionBarActivity
             }
         }
     }
+
+
+    private class WstHistorico extends AsyncTask<String, Integer, Boolean> {
+
+        private static final String SERVICE_URL = "http://192.168.1.46:14530/BQParkServices/estacionamientoBQParkInspector/HistoricoDeConsultasPorInspector";
+        String url = SERVICE_URL + "/" + tokenSession;
+        private ProgressDialog progressDialog = null;
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            HttpClient httpClient = new DefaultHttpClient();
+
+            HttpGet del = new HttpGet(url);
+            del.setHeader("content-type", "application/json");
+
+            try {
+                publishProgress();
+                HttpResponse resp = httpClient.execute(del);
+                String respStr = EntityUtils.toString(resp.getEntity());
+                JSONObject respJSON = new JSONObject(respStr);
+
+                errorResponse = respJSON.getInt("codigoError");
+                System.out.println(errorResponse);
+
+                if (errorResponse == 200) {
+                    historicoResponse = respJSON.getJSONArray("historico");
+                    System.out.println(historicoResponse);
+                    int i;
+                    for(i =0;i<historicoResponse.length();i++){
+                        Integer unidTicket = historicoResponse.getJSONObject(i).getInt("idTicket");
+                        String unaDateTime = historicoResponse.getJSONObject(i).getString("fechaHoraConsulta");
+                        String unamatricula = historicoResponse.getJSONObject(i).getString("matricula");
+                        Consulta unaConsulta = new Consulta(unidTicket,unaDateTime,unamatricula);
+
+                        unalistaConsultas.add(unaConsulta);
+                    }
+
+                    resultado = true;
+
+                } else {
+
+                    resultado = false;
+
+                }
+
+            } catch (Exception ex) {
+                Log.e("ServicioRest", "Error!", ex);
+                resultado = false;
+            }
+            return resultado;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ConsultaInfraccion.this);
+            progressDialog.setCancelable(true);
+            progressDialog.setIndeterminate(true);
+
+        }
+
+
+        @Override
+        protected void onProgressUpdate(Integer... progress){
+            super.onProgressUpdate(progress);
+            progressDialog = ProgressDialog.show(ConsultaInfraccion.this,"Espere","Consultando");
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result){
+            progressDialog.dismiss();
+            Fragment  fragment = null;
+            fragment = new fragment_historico();
+
+            if (fragment != null){
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .addToBackStack(mTitle.toString())
+                        .commit();
+
+            }
+
+        }
+    }
+
+
 
 }
