@@ -41,12 +41,15 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class ConsultaInfraccion extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     private String userLogged;
     private String tokenSession;
+    private String dateTimeConsulta;
+    private String dateTimeEndTicket;
 
     int errorResponse;
     JSONObject consultaResponse;
@@ -54,7 +57,7 @@ public class ConsultaInfraccion extends ActionBarActivity
     Boolean resultado;
     String matricula;
     Boolean multa = true;
-    public ArrayList<Consulta> unalistaConsultas = new ArrayList<Consulta> ();
+    public static List unalistaConsultas = new ArrayList<Consulta>();
 
 
     /**
@@ -256,8 +259,7 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     private class WstConsulta extends AsyncTask<String, Integer, Boolean> {
 
-        private static final String SERVICE_URL = "http://192.168.1.46:14530/BQParkServices/estacionamientoBQParkInspector/ConsultarPorMatricula";
-        String url = SERVICE_URL + "/" + tokenSession + "/" + matricula;
+        String url = Constantes.CONSULTAMATRICULA  + "/" + tokenSession + "/" + matricula;
         private ProgressDialog progressDialog = null;
 
         @Override
@@ -279,9 +281,9 @@ public class ConsultaInfraccion extends ActionBarActivity
                 if (errorResponse == 200) {
                     consultaResponse = respJSON.getJSONObject("datosVariables");
                     System.out.println(consultaResponse);
-                    String dateTimeConsulta = consultaResponse.getString("dateTime");
+                    dateTimeConsulta = consultaResponse.getString("dateTime");
                     System.out.println(dateTimeConsulta);
-                    String dateTimeEndTicket = consultaResponse.getString("dateTimeTicket");
+                    dateTimeEndTicket = consultaResponse.getString("dateTimeTicket");
                     System.out.println(dateTimeEndTicket);
 
                     if (dateTimeEndTicket != "null"){
@@ -342,7 +344,7 @@ public class ConsultaInfraccion extends ActionBarActivity
             progressDialog.dismiss();
             if(result){
                 String mTitle = getString(R.string.title_section1);
-                fragment_consultaResultado newFragment =fragment_consultaResultado.newInstance(matricula,multa);
+                fragment_consultaResultado newFragment =fragment_consultaResultado.newInstance(matricula,multa,dateTimeConsulta,dateTimeEndTicket);
                 if (newFragment != null){
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     fragmentManager.beginTransaction()
@@ -358,8 +360,7 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     private class WstHistorico extends AsyncTask<String, Integer, Boolean> {
 
-        private static final String SERVICE_URL = "http://192.168.1.46:14530/BQParkServices/estacionamientoBQParkInspector/HistoricoDeConsultasPorInspector";
-        String url = SERVICE_URL + "/" + tokenSession;
+        String url = Constantes.CONSULTAHISTORICO + "/" + tokenSession;
         private ProgressDialog progressDialog = null;
 
         @Override

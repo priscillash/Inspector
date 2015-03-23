@@ -35,31 +35,6 @@ public class verificacionLogin extends Activity {
         user = dataUser[0];
         pass = dataUser[1];
 
-        //PARA CORRER CON SERVIDOR SE DEBE QUITAR!!!!
-
-        /*
-
-        if (user.equals("user") && pass.equals("pass")) {
-            //Genero Token para mantener la sesión.
-            //String token;
-            //SessionIdentifierGenerator sessionId = new SessionIdentifierGenerator();
-            //token = sessionId.nextSessionId();
-            //Toast.makeText(verificacionLogin.this, token, Toast.LENGTH_LONG).show();
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("userLoged", user);
-            setResult(RESULT_OK, returnIntent);
-            finish();
-
-
-        } else {
-
-            Intent returnIntent = new Intent();
-            setResult(RESULT_CANCELED, returnIntent);
-            finish();
-
-        }
-        */
-
 
         WebServiceTask wst = new WebServiceTask();
         wst.execute(user);
@@ -70,10 +45,9 @@ public class verificacionLogin extends Activity {
 
     private class WebServiceTask extends AsyncTask<String, Integer, Boolean> {
 
-        private static final String SERVICE_URL = "http://192.168.1.46:14530/BQParkServices/estacionamientoBQParkInspector/LoginInspector";
         private static final String TAG = "verificacionLogin";
         private static final String imei = "/imei";
-        String url = SERVICE_URL + "/"+ user +"/"+pass + imei;
+        String url = Constantes.LOGININSPECTOR + "/"+ user +"/"+pass + imei;
         private ProgressDialog progressDialog=null;
 
         @Override
@@ -136,7 +110,6 @@ public class verificacionLogin extends Activity {
             progressDialog.dismiss();
             if (result){
                 Intent returnIntent = new Intent();
-                //returnIntent.putExtra("tokenSession", token);
                 returnIntent.putExtra("token", tokenSessionResponse);
                 returnIntent.putExtra("userLogged",user);
                 setResult(RESULT_OK, returnIntent);
