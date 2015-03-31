@@ -2,6 +2,8 @@ package com.example.priscilla.inspectores;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
@@ -141,14 +143,6 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     }
 
-    public void doCameraPositiveClick() {
-
-        Intent openIntent = new Intent(this, Camara.class);
-        openIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(openIntent);
-
-    }
-
     public void doNegativeClick() {
 
 
@@ -176,7 +170,7 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }

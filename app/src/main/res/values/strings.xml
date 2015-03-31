@@ -36,5 +36,8 @@
     <string name="Numeros_ejemplo">Ej: 1111</string>
     <string name="Vehiculo_en_Infraccion"> Vehículo en Infracción</string>
     <string name="descLogo">Logo de la aplicación</string>
+    <string name="title_activity_camara">Camara</string>
+    <string name="title_activity_camera_">Camera_Activity</string>
+    <string name= "boton_foto_id">Boton_foto</string>
 
 </resources>
