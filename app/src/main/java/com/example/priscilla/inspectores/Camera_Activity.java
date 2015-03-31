@@ -1,20 +1,20 @@
 package com.example.priscilla.inspectores;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class Camera_Activity extends ActionBarActivity {
+public class Camera_Activity extends Activity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private Uri fileUri;
     public static final int MEDIA_TYPE_IMAGE = 1;
@@ -26,13 +26,13 @@ public class Camera_Activity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_);
 
-        // create Intent to take a picture and return control to the calling application
+        // crear intent para tomar la fotografía y retornar luego el control a la aplicación
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+        fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // crear directorio para guardar imágen
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // setear nombre del archivo
 
-        // start the image capture Intent
+        // se lanza el intent para la captura de fotografía
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
@@ -40,14 +40,14 @@ public class Camera_Activity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            TextView titulo1 = (TextView) findViewById(R.id.titulo1);
             if (resultCode == RESULT_OK) {
-                // Image captured and saved to fileUri specified in the Intent
-                Toast.makeText(this, "Image saved to:\n" +
-                        data.getData(), Toast.LENGTH_LONG).show();
+                titulo1.setText("Se ha guardado la foto");
             } else if (resultCode == RESULT_CANCELED) {
-                // User cancelled the image capture
+                titulo1.setText("Acción cancelada");
             } else {
                 // Image capture failed, advise user
+                titulo1.setText("Se ha producido un error");
             }
         }
 
@@ -60,13 +60,10 @@ public class Camera_Activity extends ActionBarActivity {
 
     /** Create a File for saving an image or video */
     private static File getOutputMediaFile(int type){
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
 
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "MyCameraApp");
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
+
 
         // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){

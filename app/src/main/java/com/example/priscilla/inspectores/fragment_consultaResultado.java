@@ -3,7 +3,6 @@ package com.example.priscilla.inspectores;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +77,7 @@ public class fragment_consultaResultado extends Fragment {
             botonFoto = new Button(getActivity());
             botonFoto.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT));
             botonFoto.setText("FOTO");
+
             //add button to the layout
 
             LinearLayout ll = (LinearLayout)view.findViewById(R.id.foto);
@@ -93,20 +93,19 @@ public class fragment_consultaResultado extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        botonFoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (multa) {
+            botonFoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                Intent openIntent=new Intent(getActivity(), Camera_Activity.class);
-                startActivity(openIntent);
+                    Intent openIntent = new Intent(getActivity(), Camera_Activity.class);
+                    getActivity().startActivity(openIntent);
 
-            }
-        });
+                }
+            });
 
 
+        }
     }
-
-
-
 
 }
