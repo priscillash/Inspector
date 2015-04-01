@@ -38,6 +38,7 @@
     <string name="descLogo">Logo de la aplicación</string>
     <string name="title_activity_camara">Camara</string>
     <string name="title_activity_camera_">Camera_Activity</string>
-    <string name= "boton_foto_id">Boton_foto</string>
+    <string name="boton_foto_id">Boton_foto</string>
+    <string name="title_activity_upload_">Upload_Activity</string>
 
 </resources>

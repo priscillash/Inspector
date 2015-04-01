@@ -49,7 +49,7 @@ import java.util.List;
 public class ConsultaInfraccion extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     private String userLogged;
-    private String tokenSession;
+    public static String tokenSession;
     private String dateTimeConsulta;
     private String dateTimeEndTicket;
 

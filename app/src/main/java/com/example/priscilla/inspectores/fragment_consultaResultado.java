@@ -1,6 +1,7 @@
 package com.example.priscilla.inspectores;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -76,7 +77,8 @@ public class fragment_consultaResultado extends Fragment {
             //set the properties for button
             botonFoto = new Button(getActivity());
             botonFoto.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT));
-            botonFoto.setText("FOTO");
+            botonFoto.setText("TOMAR FOTO?");
+            botonFoto.setBackgroundColor(Color.TRANSPARENT);
 
             //add button to the layout
 

@@ -2,11 +2,16 @@ package com.example.priscilla.inspectores;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.io.File;
@@ -18,6 +23,9 @@ public class Camera_Activity extends Activity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private Uri fileUri;
     public static final int MEDIA_TYPE_IMAGE = 1;
+    public static String timeStamp = null;
+    public String encodedImage;
+    public Button botonUpload;
 
 
 
@@ -43,6 +51,30 @@ public class Camera_Activity extends Activity {
             TextView titulo1 = (TextView) findViewById(R.id.titulo1);
             if (resultCode == RESULT_OK) {
                 titulo1.setText("Se ha guardado la foto");
+                //set the properties for button
+                botonUpload = new Button(this);
+                botonUpload.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT));
+                botonUpload.setText("UPLOAD FOTO?");
+                botonUpload.setBackgroundColor(Color.argb(5,0,51,102));
+                botonUpload.setFocusable(true);
+
+                //add button to the layout
+
+                LinearLayout ll = (LinearLayout)findViewById(R.id.upload_foto);
+                ll.addView(botonUpload);
+
+
+                botonUpload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent openIntent = new Intent(Camera_Activity.this, Upload_Activity.class);
+                        openIntent.putExtra("file_uri",fileUri.toString());
+                        startActivity(openIntent);
+
+                    }
+                });
+
             } else if (resultCode == RESULT_CANCELED) {
                 titulo1.setText("Acción cancelada");
             } else {
@@ -74,7 +106,7 @@ public class Camera_Activity extends Activity {
         }
 
         // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE){
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
@@ -85,5 +117,8 @@ public class Camera_Activity extends Activity {
 
         return mediaFile;
     }
+
+
+
 
 }

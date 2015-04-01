@@ -11,7 +11,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -44,10 +44,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Camera_Activity"
             android:label="@string/title_activity_camera_" >
+        </activity>
+        <activity
+            android:name=".Upload_Activity"
+            android:label="@string/title_activity_upload_" >
         </activity>
     </application>
 
