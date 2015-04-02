@@ -70,7 +70,7 @@ public class Camera_Activity extends Activity {
 
                         Intent openIntent = new Intent(Camera_Activity.this, Upload_Activity.class);
                         openIntent.putExtra("file_uri",fileUri.toString());
-                        startActivity(openIntent);
+                        startActivityForResult(openIntent,2);
 
                     }
                 });
@@ -82,6 +82,13 @@ public class Camera_Activity extends Activity {
                 titulo1.setText("Se ha producido un error");
             }
         }
+
+        if (requestCode == 2) {
+            Intent openIntent=new Intent(Camera_Activity.this, ConsultaInfraccion.class);
+            startActivity(openIntent);
+
+        }
+
 
     }
 
@@ -117,8 +124,5 @@ public class Camera_Activity extends Activity {
 
         return mediaFile;
     }
-
-
-
 
 }

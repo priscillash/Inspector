@@ -1,8 +1,6 @@
 package com.example.priscilla.inspectores;
 
-/**
- * Created by priscilla on 15/03/15.
- */
+
 public class Consulta {
 
     Integer idTicket;

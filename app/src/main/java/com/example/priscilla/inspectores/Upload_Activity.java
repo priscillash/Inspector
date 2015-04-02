@@ -1,16 +1,23 @@
 package com.example.priscilla.inspectores;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Base64;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import org.json.JSONObject;
@@ -20,6 +27,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Upload_Activity extends Activity {
@@ -54,7 +63,6 @@ public class Upload_Activity extends Activity {
             byte[] imageBytes = baos.toByteArray();
             System.out.println(imageBytes.length);
             encodedImage = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
-            //System.out.println(encodedImage);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -78,9 +86,9 @@ public class Upload_Activity extends Activity {
         }
         WstUploadFoto unwstUploadFoto= new WstUploadFoto();
         unwstUploadFoto.execute();
+
+        finish();
     }
-
-
 
 
 
@@ -88,20 +96,29 @@ public class Upload_Activity extends Activity {
     private class WstUploadFoto extends AsyncTask<String, Integer, Boolean> {
 
 
-        String url = Constantes.GuardarMulta  + "/" + ConsultaInfraccion.tokenSession + "/" + "IMG_"+ Camera_Activity.timeStamp + ".jpg" + "/" + encodedImage;
+        String url = Constantes.GuardarMulta  + "/" + ConsultaInfraccion.tokenSession + "/" + "IMG_"+ Camera_Activity.timeStamp + ".jpg" ;
         //private ProgressDialog progressDialog = null;
         Boolean resultado;
         @Override
         protected Boolean doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
 
-            //System.out.println(url);
-            HttpGet del = new HttpGet(url);
-            del.setHeader("content-type", "application/json");
+            HttpPost httpPost = new HttpPost(url);
+
+            List<NameValuePair> pairs=  new ArrayList<NameValuePair>();
+            pairs.add(new BasicNameValuePair("imagen",encodedImage));
+            System.out.println(encodedImage);
+
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(pairs));
+            }catch(Exception e){
+                //blabla
+            }
+
 
             try {
                 //publishProgress();
-                HttpResponse resp = httpClient.execute(del);
+                HttpResponse resp = httpClient.execute(httpPost);
                 String respStr = EntityUtils.toString(resp.getEntity());
                 JSONObject respJSON = new JSONObject(respStr);
 
@@ -109,14 +126,10 @@ public class Upload_Activity extends Activity {
                 System.out.println(errorResponse);
 
                 if (errorResponse == 200) {
-
-
                     resultado = true;
 
                 } else {
-
                     resultado = false;
-
                 }
 
             } catch (Exception ex) {
@@ -148,8 +161,30 @@ public class Upload_Activity extends Activity {
         protected void onPostExecute(Boolean result){
             //progressDialog.dismiss();
 
+            notificacion(result);
+
         }
     }
 
+    public void notificacion(Boolean result){
+        String res;
+
+        if (result){
+            res = "Fotografia guardada";
+        }else{
+            res ="No se ha podido guardar la fotografía";
+        }
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle("Gestion de Estacionamiento")
+                .setContentText(res);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            // mId allows you to update the notification later on.
+        int mid = 1;
+        mNotificationManager.notify(mid,mBuilder.build());
+
+
+    }
 
 }

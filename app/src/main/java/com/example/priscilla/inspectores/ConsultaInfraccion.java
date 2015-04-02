@@ -2,6 +2,7 @@ package com.example.priscilla.inspectores;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -17,6 +18,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,6 +42,11 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +59,8 @@ public class ConsultaInfraccion extends ActionBarActivity
     public static String tokenSession;
     private String dateTimeConsulta;
     private String dateTimeEndTicket;
+    private String fileUri;
+    private String encodedImage;
 
     int errorResponse;
     JSONObject consultaResponse;
@@ -59,7 +68,7 @@ public class ConsultaInfraccion extends ActionBarActivity
     Boolean resultado;
     String matricula;
     Boolean multa = true;
-    public static List unalistaConsultas = new ArrayList<Consulta>();
+    public static ArrayList<Consulta>  unalistaConsultas = new ArrayList<Consulta>();
 
 
     /**
@@ -158,6 +167,7 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     public void historico(){
 
+        unalistaConsultas.clear();
         WstHistorico unwstHistorico= new WstHistorico();
         unwstHistorico.execute(tokenSession);
 
@@ -249,6 +259,7 @@ public class ConsultaInfraccion extends ActionBarActivity
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
+
 
 
     private class WstConsulta extends AsyncTask<String, Integer, Boolean> {
@@ -421,21 +432,23 @@ public class ConsultaInfraccion extends ActionBarActivity
         @Override
         protected void onPostExecute(Boolean result){
             progressDialog.dismiss();
-            Fragment  fragment = null;
-            fragment = new fragment_historico();
 
-            if (fragment != null){
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment)
-                        .addToBackStack(mTitle.toString())
-                        .commit();
+            if (result){
+
+                Fragment  fragment = null;
+                fragment = new fragment_historico();
+                if (fragment != null){
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, fragment)
+                            .addToBackStack(mTitle.toString())
+                            .commit();
+
+                }
 
             }
 
         }
     }
-
-
 
 }
