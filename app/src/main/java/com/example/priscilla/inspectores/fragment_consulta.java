@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.InputFilter;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +60,8 @@ public class fragment_consulta extends Fragment  {
 
         final EditText etNumeros = (EditText)getView().findViewById(R.id.Numeros);
         final EditText etLetras = (EditText)getView().findViewById(R.id.Letras);
-
+        etLetras.setFilters(new InputFilter[]{new InputFilter.AllCaps()
+        });
 
         ImageButton unsearchButton = (ImageButton) getView().findViewById(R.id.search_button);
 

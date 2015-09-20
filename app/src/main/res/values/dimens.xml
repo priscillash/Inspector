@@ -6,7 +6,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
-    <dimen name="round_button_diameter">60dp</dimen>
+    <dimen name="round_button_diameter">100dp</dimen>
     <dimen name="add_button_margin">20dp</dimen>
     <dimen name="start_z">1dp</dimen>
     <dimen name="end_z">2dp</dimen>
@@ -14,6 +14,9 @@
     <dimen name="elevation_low">1dp</dimen>
     <dimen name="elevation_high">4dp</dimen>
     <dimen name="search_button_margin">16dp</dimen>
-
+    <dimen name="foto_width">2dp</dimen>
+    <dimen name="foto_height">1dp</dimen>
+    <dimen name="foto_width_max">3dp</dimen>
+    <dimen name="foto_height_max">2dp</dimen>
 
 </resources>

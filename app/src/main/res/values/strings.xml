@@ -5,8 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="Gestion_Estacionamiento">Gestión de Estacionamiento</string>
-    <string name="User_ID">User Id</string>
-    <string name="Password">Password</string>
+    <string name="User_ID">Usuario</string>
+    <string name="Password">Contraseña</string>
     <string name="errorLoginMsg">Usuario y/o contraseña incorrecto. Por favor intente nuevamente.</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -32,8 +32,8 @@
     <string name="ingreso_matricula">Ingresar Matrícula</string>
     <string name="Letras">Letras</string>
     <string name="Numeros">Números</string>
-    <string name="Letras_ejemplo">Ej: HHH</string>
-    <string name="Numeros_ejemplo">Ej: 1111</string>
+    <string name="Letras_ejemplo"> HHH</string>
+    <string name="Numeros_ejemplo"> 1111</string>
     <string name="Vehiculo_en_Infraccion"> Vehículo en Infracción</string>
     <string name="descLogo">Logo de la aplicación</string>
     <string name="title_activity_camara">Camara</string>

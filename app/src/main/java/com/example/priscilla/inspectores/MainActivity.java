@@ -4,11 +4,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Outline;
 import android.graphics.Typeface;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.Button;
@@ -43,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
                 .withButtonColor(MY_COLOR)
                 .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
                 .withMargins(0, 0, 16, 16)
+                .withButtonSize(130)
                 .create();
 
 
@@ -74,12 +77,10 @@ public class MainActivity extends ActionBarActivity {
             //Las credenciales del usuario son validas
             if(resultCode == RESULT_OK){
                 Bundle bundExtra=data.getExtras();
-                //String token=bundExtra.getString("tokenSession");
                 String tokenSession=bundExtra.getString("token");
                 String userLogged = bundExtra.getString("userLogged");
                 //Se envia datos a la actividad de Consulta de Infracciones.
                 Intent openIntent=new Intent(MainActivity.this, ConsultaInfraccion.class);
-                //openIntent.putExtra("tokenSession", token);
                 openIntent.putExtra("UserLoged", userLogged);
                 openIntent.putExtra("tokenSession",tokenSession);
                 startActivity(openIntent);
@@ -94,7 +95,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        //Trae a pantalla el layout de inicio
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -117,13 +118,11 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-
-
-
     @Override
     public void onDestroy(){
         super.onDestroy();
         Log.d(TAG_DEST,"onDestroy() called");
     }
+
 
 }

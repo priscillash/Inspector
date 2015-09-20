@@ -112,8 +112,12 @@ public class fragment_historico extends Fragment {
             TextView textViewc = (TextView) convertView.findViewById(R.id.tckid);
 
             textViewa.setText(dateConsulta);
+            textViewa.setTextSize(26);
+            textViewa.setTextColor(getResources().getColor(R.color.black));
             textViewb.setText(matricula);
+            textViewb.setTextSize(22);
             textViewc.setText(idTicket);
+            textViewc.setTextSize(22);
 
 
             return convertView;

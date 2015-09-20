@@ -192,5 +192,7 @@ public class custom_button extends View {
         private int convertToPixels(int dp, float scale){
             return (int) (dp * scale + 0.5f) ;
         }
+
+
     }
 }

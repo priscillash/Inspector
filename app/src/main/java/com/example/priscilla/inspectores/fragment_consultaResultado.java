@@ -1,17 +1,24 @@
 package com.example.priscilla.inspectores;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.util.Date;
 
 
 public class fragment_consultaResultado extends Fragment {
@@ -21,7 +28,7 @@ public class fragment_consultaResultado extends Fragment {
     private Boolean multa;
     private String dateTimeConsulta;
     private String dateTimeEndTicket;
-    private Button botonFoto;
+    private ImageButton botonFoto;
 
 
     public static fragment_consultaResultado newInstance(String param1, Boolean param2, String param3, String param4) {
@@ -36,7 +43,7 @@ public class fragment_consultaResultado extends Fragment {
     }
 
     public fragment_consultaResultado() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -54,60 +61,56 @@ public class fragment_consultaResultado extends Fragment {
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-
         View view = inflater.inflate(R.layout.fragment_consulta_resultado, container, false);
         TextView vehiculo_matricula = (TextView) view.findViewById(R.id.vehiculo_matricula);
-        vehiculo_matricula.setText("Matrícula: " + matricula);
+        vehiculo_matricula.setText("MATRICULA:");
+        vehiculo_matricula.setTextColor(getResources().getColor(R.color.black));
 
-        TextView dateConsulta = (TextView)view.findViewById(R.id.DateTimeConsulta);
-        dateConsulta.setText(dateTimeConsulta);
-
+        TextView unvehiculo_matricula = (TextView) view.findViewById(R.id.unvehiculo_matricula);
+        unvehiculo_matricula.setText(matricula);
+        vehiculo_matricula.setTextColor(getResources().getColor(R.color.black));
 
         if (!multa) {
             //No correspoonde infracción
             TextView vehiculo_infraccion = (TextView) view.findViewById(R.id.vehiculo_infraccion);
             vehiculo_infraccion.setText("No corresponde infracción");
-
-
+            vehiculo_infraccion.setTextColor(getResources().getColor(R.color.verde));
         }else{
             //Corresponde infracción!!!
             TextView vehiculo_infraccion = (TextView) view.findViewById(R.id.vehiculo_infraccion);
-            vehiculo_infraccion.setText("Vehículo en Infracción!");
-
-            //set the properties for button
-            botonFoto = new Button(getActivity());
-            botonFoto.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT));
-            botonFoto.setText("TOMAR FOTO?");
-            botonFoto.setBackgroundColor(Color.TRANSPARENT);
-
-            //add button to the layout
-
+            vehiculo_infraccion.setText("Vehículo en Infracción");
+            vehiculo_infraccion.setTextColor(getResources().getColor(R.color.rojo));
+            //seteo de propiedades al botón
+            botonFoto = new ImageButton(getActivity());
+            botonFoto.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_camera));
+            botonFoto.setColorFilter(getResources().getColor(R.color.black));
+            botonFoto.setBackgroundColor(Color.WHITE);
+            //botonFoto.setColorFilter(getResources().getColor(R.color.colorApp));
+            /*
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.height=100;
+            params.width =100;
+            botonFoto.setLayoutParams(params);*/
             LinearLayout ll = (LinearLayout)view.findViewById(R.id.foto);
+            ll.setScaleX(2);
+            ll.setScaleY(2);
             ll.addView(botonFoto);
 
-
         }
-
         return view;
-
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         if (multa) {
             botonFoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     Intent openIntent = new Intent(getActivity(), Camera_Activity.class);
                     getActivity().startActivity(openIntent);
 
                 }
             });
-
-
         }
     }
-
 }

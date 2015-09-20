@@ -72,12 +72,12 @@ public class ConsultaInfraccion extends ActionBarActivity
 
 
     /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
+     * Fragment que gestiona el comportamiento, interacciones y presentación del panel de navegación.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
+     * Variable que se emplea para almacenar el titulo del último fragment desplegado. A usar {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
 
@@ -97,7 +97,7 @@ public class ConsultaInfraccion extends ActionBarActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
-        // Set up the drawer.
+        // Seteo del drawer
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
@@ -110,7 +110,7 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
+        // cambio hacia el fragment seleccionado
         Fragment  fragment = null;
         dialog_logout dialog = null;
         switch (position) {
@@ -119,7 +119,6 @@ public class ConsultaInfraccion extends ActionBarActivity
                 mTitle = getString(R.string.title_section1);
                 break;
             case 1:
-                //fragment = new fragment_historico();
                 mTitle = getString(R.string.title_section2);
                 historico();
                 break;
@@ -139,13 +138,11 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     }
     public void showDialog() {
-        //FragmentManager fm = getSupportFragmentManager();
         dialog_logout newFragment = dialog_logout.newInstance(R.string.desea_cerrar_sesión);
         newFragment.show(getFragmentManager(), "dialog");
     }
 
     public void doPositiveClick() {
-
         Intent openIntent = new Intent(this, MainActivity.class);
         openIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(openIntent);
@@ -158,7 +155,6 @@ public class ConsultaInfraccion extends ActionBarActivity
     }
 
     public void consulta(String matricula){
-
         this.matricula = matricula;
         WstConsulta unwstConsulta = new WstConsulta();
         unwstConsulta.execute(matricula);
@@ -166,7 +162,6 @@ public class ConsultaInfraccion extends ActionBarActivity
     }
 
     public void historico(){
-
         unalistaConsultas.clear();
         WstHistorico unwstHistorico= new WstHistorico();
         unwstHistorico.execute(tokenSession);
@@ -189,9 +184,6 @@ public class ConsultaInfraccion extends ActionBarActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.consulta_infraccion, menu);
             restoreActionBar();
             return true;
@@ -201,16 +193,10 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -293,12 +279,13 @@ public class ConsultaInfraccion extends ActionBarActivity
 
                     if (dateTimeEndTicket != "null"){
 
-                        SimpleDateFormat fmt = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+                        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date dTConsulta = fmt.parse(dateTimeConsulta);
                         System.out.println(dTConsulta);
 
                         Date dTticket = fmt.parse(dateTimeEndTicket);
                         System.out.println(dTticket);
+                        System.out.println(dTticket.before(dTConsulta));
 
 
                         if (dTticket.before(dTConsulta)){

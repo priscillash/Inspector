@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -25,7 +27,7 @@ public class Camera_Activity extends Activity {
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static String timeStamp = null;
     public String encodedImage;
-    public Button botonUpload;
+    public ImageButton botonUpload;
 
 
 
@@ -50,17 +52,20 @@ public class Camera_Activity extends Activity {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             TextView titulo1 = (TextView) findViewById(R.id.titulo1);
             if (resultCode == RESULT_OK) {
-                titulo1.setText("Se ha guardado la foto");
+                titulo1.setText("Registrar Evidencia Fotográfica");
                 //set the properties for button
-                botonUpload = new Button(this);
-                botonUpload.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT));
-                botonUpload.setText("UPLOAD FOTO?");
-                botonUpload.setBackgroundColor(Color.argb(5,0,51,102));
-                botonUpload.setFocusable(true);
+                botonUpload = new ImageButton(this);
+                //botonUpload.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT));
+                botonUpload.setId(R.id.upload_foto);
+                botonUpload.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_upload));
+                botonUpload.setColorFilter(getResources().getColor(R.color.colorApp));
+                botonUpload.setBackgroundColor(Color.WHITE);
 
                 //add button to the layout
 
-                LinearLayout ll = (LinearLayout)findViewById(R.id.upload_foto);
+                RelativeLayout ll = (RelativeLayout)findViewById(R.id.upload_foto);
+                ll.setScaleX(3);
+                ll.setScaleY(3);
                 ll.addView(botonUpload);
 
 
