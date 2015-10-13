@@ -51,23 +51,20 @@ public class Camera_Activity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             TextView titulo1 = (TextView) findViewById(R.id.titulo1);
+            //Si la fotografía se tomó correctamente
             if (resultCode == RESULT_OK) {
                 titulo1.setText("Registrar Evidencia Fotográfica");
-                //set the properties for button
+                //seteo de propiedades en el botón
                 botonUpload = new ImageButton(this);
-                //botonUpload.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT));
                 botonUpload.setId(R.id.upload_foto);
-                botonUpload.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_upload));
-                botonUpload.setColorFilter(getResources().getColor(R.color.colorApp));
+                botonUpload.setImageDrawable(getResources().getDrawable(R.drawable.upload_icono));
                 botonUpload.setBackgroundColor(Color.WHITE);
+                botonUpload.setScaleX(1);
+                botonUpload.setScaleY(1);
 
-                //add button to the layout
-
-                RelativeLayout ll = (RelativeLayout)findViewById(R.id.upload_foto);
-                ll.setScaleX(3);
-                ll.setScaleY(3);
+                //se agrega el botón al layout
+                LinearLayout ll = (LinearLayout)findViewById(R.id.upload_foto);
                 ll.addView(botonUpload);
-
 
                 botonUpload.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -76,14 +73,17 @@ public class Camera_Activity extends Activity {
                         Intent openIntent = new Intent(Camera_Activity.this, Upload_Activity.class);
                         openIntent.putExtra("file_uri",fileUri.toString());
                         startActivityForResult(openIntent,2);
-
                     }
                 });
-
-            } else if (resultCode == RESULT_CANCELED) {
+            }
+            //Si se canceló la toma de fotografía
+            else if (resultCode == RESULT_CANCELED)
+            {
                 titulo1.setText("Acción cancelada");
-            } else {
-                // Image capture failed, advise user
+            }
+            //Si se produjo un error en la toma de la fotografía
+            else
+            {
                 titulo1.setText("Se ha producido un error");
             }
         }
@@ -91,25 +91,20 @@ public class Camera_Activity extends Activity {
         if (requestCode == 2) {
             Intent openIntent=new Intent(Camera_Activity.this, ConsultaInfraccion.class);
             startActivity(openIntent);
-
         }
-
-
     }
 
-    /** Create a file Uri for saving an image or video */
+    /** Se crea una Uri para guardar la imágen */
     private static Uri getOutputMediaFileUri(int type){
         return Uri.fromFile(getOutputMediaFile(type));
     }
 
-    /** Create a File for saving an image or video */
+    /** Se crea una carpeta para guardar las imágenes */
     private static File getOutputMediaFile(int type){
 
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "MyCameraApp");
 
-
-        // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){
             if (! mediaStorageDir.mkdirs()){
                 Log.d("MyCameraApp", "failed to create directory");
@@ -117,7 +112,7 @@ public class Camera_Activity extends Activity {
             }
         }
 
-        // Create a media file name
+        // Se crea el archivo para la imagen
         timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE){

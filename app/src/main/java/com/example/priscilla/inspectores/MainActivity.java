@@ -48,11 +48,9 @@ public class MainActivity extends ActionBarActivity {
                 .withButtonSize(130)
                 .create();
 
-
         //se define la estructura de datos que identifica al Usuario.
         final EditText etUser = (EditText)findViewById(R.id.User_ID);
         final EditText etPass = (EditText)findViewById(R.id.Pass);
-
 
         unpButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -68,8 +66,6 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-
-
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -102,13 +98,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

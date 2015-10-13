@@ -12,14 +12,13 @@ public class  dialog_logout extends DialogFragment{
 
 
     public dialog_logout() {
-        // Required empty public constructor
+        // Requiere constructor por defecto
     }
 
     public static dialog_logout newInstance(int title) {
         dialog_logout frag = new dialog_logout();
         Bundle args = new Bundle();
         args.putInt("title", title);
-        //args.putString(title, "title");
         frag.setArguments(args);
         return frag;
     }

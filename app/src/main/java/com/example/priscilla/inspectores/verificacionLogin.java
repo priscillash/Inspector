@@ -35,7 +35,6 @@ public class verificacionLogin extends Activity {
         user = dataUser[0];
         pass = dataUser[1];
 
-
         WebServiceTask wst = new WebServiceTask();
         wst.execute(user);
 

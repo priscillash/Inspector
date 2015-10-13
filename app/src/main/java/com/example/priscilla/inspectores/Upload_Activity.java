@@ -39,7 +39,6 @@ public class Upload_Activity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.);
 
         Bundle bundle = getIntent().getExtras();
         fileUri = bundle.getString("file_uri");
@@ -91,13 +90,10 @@ public class Upload_Activity extends Activity {
     }
 
 
-
-
     private class WstUploadFoto extends AsyncTask<String, Integer, Boolean> {
 
 
         String url = Constantes.GuardarMulta  + "/" + ConsultaInfraccion.tokenSession + "/" + "IMG_"+ Camera_Activity.timeStamp + ".jpg" ;
-        //private ProgressDialog progressDialog = null;
         Boolean resultado;
         @Override
         protected Boolean doInBackground(String... params) {
@@ -112,12 +108,11 @@ public class Upload_Activity extends Activity {
             try {
                 httpPost.setEntity(new UrlEncodedFormEntity(pairs));
             }catch(Exception e){
-                //blabla
+
             }
 
 
             try {
-                //publishProgress();
                 HttpResponse resp = httpClient.execute(httpPost);
                 String respStr = EntityUtils.toString(resp.getEntity());
                 JSONObject respJSON = new JSONObject(respStr);
@@ -142,27 +137,17 @@ public class Upload_Activity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //progressDialog = new ProgressDialog(Camera_Activity.this);
-            //progressDialog.setCancelable(true);
-            //progressDialog.setIndeterminate(true);
-
         }
 
 
         @Override
         protected void onProgressUpdate(Integer... progress){
             super.onProgressUpdate(progress);
-
-            //progressDialog = ProgressDialog.show(Camera_Activity.this,"Espere","Consultando");
-
         }
 
         @Override
         protected void onPostExecute(Boolean result){
-            //progressDialog.dismiss();
-
             notificacion(result);
-
         }
     }
 
@@ -180,11 +165,7 @@ public class Upload_Activity extends Activity {
                 .setContentText(res);
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            // mId allows you to update the notification later on.
         int mid = 1;
         mNotificationManager.notify(mid,mBuilder.build());
-
-
     }
-
 }

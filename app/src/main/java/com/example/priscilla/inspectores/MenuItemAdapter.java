@@ -17,12 +17,10 @@ public class MenuItemAdapter extends ArrayAdapter<Menu> {
     Menu menu []=null;
 
     public MenuItemAdapter(Context context,int layoutResourceId, Menu[] menu){
-
         super(context, layoutResourceId, menu);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.menu = menu;
-
     }
 
     @Override
@@ -33,17 +31,12 @@ public class MenuItemAdapter extends ArrayAdapter<Menu> {
         if(row == null){
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
-
             holder = new MenuItemHolder();
             holder.imgIcon = (ImageView)row.findViewById(R.id.imgIcon);
             holder.textItem = (TextView)row.findViewById(R.id.textItem);
-
             row.setTag(holder);
-
         }else{
-
             holder = (MenuItemHolder)row.getTag();
-
         }
 
         Menu menu = this.menu[position];
@@ -51,7 +44,6 @@ public class MenuItemAdapter extends ArrayAdapter<Menu> {
         holder.imgIcon.setImageResource(menu.icono);
 
         return row;
-
     }
 
     static class MenuItemHolder

@@ -62,38 +62,28 @@ public class fragment_consultaResultado extends Fragment {
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_consulta_resultado, container, false);
-        TextView vehiculo_matricula = (TextView) view.findViewById(R.id.vehiculo_matricula);
-        vehiculo_matricula.setText("MATRICULA:");
-        vehiculo_matricula.setTextColor(getResources().getColor(R.color.black));
 
         TextView unvehiculo_matricula = (TextView) view.findViewById(R.id.unvehiculo_matricula);
         unvehiculo_matricula.setText(matricula);
-        vehiculo_matricula.setTextColor(getResources().getColor(R.color.black));
+        unvehiculo_matricula.setTextColor(getResources().getColor(R.color.black));
 
         if (!multa) {
             //No correspoonde infracción
             TextView vehiculo_infraccion = (TextView) view.findViewById(R.id.vehiculo_infraccion);
-            vehiculo_infraccion.setText("No corresponde infracción");
+            vehiculo_infraccion.setText("Vehículo con ticket vigente");
             vehiculo_infraccion.setTextColor(getResources().getColor(R.color.verde));
         }else{
-            //Corresponde infracción!!!
+            //Corresponde infracción
             TextView vehiculo_infraccion = (TextView) view.findViewById(R.id.vehiculo_infraccion);
             vehiculo_infraccion.setText("Vehículo en Infracción");
             vehiculo_infraccion.setTextColor(getResources().getColor(R.color.rojo));
             //seteo de propiedades al botón
             botonFoto = new ImageButton(getActivity());
-            botonFoto.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_camera));
-            botonFoto.setColorFilter(getResources().getColor(R.color.black));
+            botonFoto.setImageDrawable(getResources().getDrawable(R.drawable.foto_icon));
             botonFoto.setBackgroundColor(Color.WHITE);
-            //botonFoto.setColorFilter(getResources().getColor(R.color.colorApp));
-            /*
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.height=100;
-            params.width =100;
-            botonFoto.setLayoutParams(params);*/
+            botonFoto.setScaleX(1);
+            botonFoto.setScaleY(1);
             LinearLayout ll = (LinearLayout)view.findViewById(R.id.foto);
-            ll.setScaleX(2);
-            ll.setScaleY(2);
             ll.addView(botonFoto);
 
         }

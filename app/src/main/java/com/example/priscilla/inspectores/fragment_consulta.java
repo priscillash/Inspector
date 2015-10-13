@@ -36,7 +36,7 @@ public class fragment_consulta extends Fragment  {
     public String letras, numeros;
 
     public fragment_consulta() {
-        // Required empty public constructor
+        // Requiere constructor público por defecto
     }
 
     @Override
@@ -48,9 +48,7 @@ public class fragment_consulta extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_consulta, container, false);
-
         return view;
     }
 
@@ -62,9 +60,7 @@ public class fragment_consulta extends Fragment  {
         final EditText etLetras = (EditText)getView().findViewById(R.id.Letras);
         etLetras.setFilters(new InputFilter[]{new InputFilter.AllCaps()
         });
-
         ImageButton unsearchButton = (ImageButton) getView().findViewById(R.id.search_button);
-
         unsearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,10 +69,7 @@ public class fragment_consulta extends Fragment  {
                 numeros = etNumeros.getText().toString().toUpperCase();
                 String matricula = letras + numeros;
                 ((ConsultaInfraccion)getActivity()).consulta(matricula);
-
             }
         });
-
     }
-
 }

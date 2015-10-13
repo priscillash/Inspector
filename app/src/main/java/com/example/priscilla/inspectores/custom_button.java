@@ -22,10 +22,6 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 
 
-/**
- * TODO: document your custom view class.
- * http://www.androidcookbook.com/Recipe.seam?recipeId=3307!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- */
 public class custom_button extends View {
 
     final static OvershootInterpolator overshootInterpolator = new OvershootInterpolator();
@@ -83,40 +79,11 @@ public class custom_button extends View {
         return super.onTouchEvent(event);
     }
 
-    public void hideFloatingActionButton() {
-        if (!mHidden) {
-            ObjectAnimator scaleX = ObjectAnimator.ofFloat(this, "scaleX", 1, 0);
-            ObjectAnimator scaleY = ObjectAnimator.ofFloat(this, "scaleY", 1, 0);
-            AnimatorSet animSetXY = new AnimatorSet();
-            animSetXY.playTogether(scaleX, scaleY);
-            animSetXY.setInterpolator(accelerateInterpolator);
-            animSetXY.setDuration(100);
-            animSetXY.start();
-            mHidden = true;
-        }
-    }
-
-    public void showFloatingActionButton() {
-        if (mHidden) {
-            ObjectAnimator scaleX = ObjectAnimator.ofFloat(this, "scaleX", 0, 1);
-            ObjectAnimator scaleY = ObjectAnimator.ofFloat(this, "scaleY", 0, 1);
-            AnimatorSet animSetXY = new AnimatorSet();
-            animSetXY.playTogether(scaleX, scaleY);
-            animSetXY.setInterpolator(overshootInterpolator);
-            animSetXY.setDuration(200);
-            animSetXY.start();
-            mHidden = false;
-        }
-    }
-
-    public boolean isHidden() {
-        return mHidden;
-    }
 
     static public class Builder {
         private FrameLayout.LayoutParams params;
         private final Activity activity;
-        int gravity = Gravity.BOTTOM | Gravity.RIGHT; // default bottom right
+        int gravity = Gravity.BOTTOM | Gravity.RIGHT;
         Drawable drawable;
         int color = Color.WHITE;
         int size = 0;
@@ -124,24 +91,18 @@ public class custom_button extends View {
 
         public Builder(Activity context) {
             scale = context.getResources().getDisplayMetrics().density;
-            size = convertToPixels(72, scale); // default size is 72dp by 72dp
+            size = convertToPixels(72, scale);
             params = new FrameLayout.LayoutParams(size, size);
             params.gravity = gravity;
 
             this.activity = context;
         }
 
-        /**
-         * Sets the gravity for the FAB
-         */
         public Builder withGravity(int gravity) {
             this.gravity = gravity;
             return this;
         }
 
-        /**
-         * Sets the margins for the FAB in dp
-         */
         public Builder withMargins(int left, int top, int right, int bottom) {
             params.setMargins(
                     convertToPixels(left, scale),
@@ -151,25 +112,16 @@ public class custom_button extends View {
             return this;
         }
 
-        /**
-         * Sets the FAB drawable
-         */
         public Builder withDrawable(final Drawable drawable) {
             this.drawable = drawable;
             return this;
         }
 
-        /**
-         * Sets the FAB color
-         */
         public Builder withButtonColor(final int color) {
             this.color = color;
             return this;
         }
 
-        /**
-         * Sets the FAB size in dp
-         */
         public Builder withButtonSize(int size) {
             size = convertToPixels(size, scale);
             params = new FrameLayout.LayoutParams(size, size);
@@ -185,14 +137,9 @@ public class custom_button extends View {
             root.addView(button, params);
             return button;
         }
-
-        // The calculation (value * scale + 0.5f) is a widely used to convert to dps to pixel units
-// based on density scale
-// see developer.android.com (Supporting Multiple Screen Sizes)
         private int convertToPixels(int dp, float scale){
             return (int) (dp * scale + 0.5f) ;
         }
-
 
     }
 }

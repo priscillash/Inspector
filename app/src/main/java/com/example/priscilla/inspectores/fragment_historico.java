@@ -21,32 +21,18 @@ import java.util.ArrayList;
 
 public class fragment_historico extends Fragment {
 
-
-   /**
-     * The fragment's ListView/GridView.
-     */
     private ListView mListView;
 
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
+    //Adapter que se utilizará para completar la lista de históricos
     private CustomConsultaAdapter customConsultaAdapter;
 
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public fragment_historico() {
-
+    //Se requiere constructor público por defecto
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -56,7 +42,7 @@ public class fragment_historico extends Fragment {
 
         customConsultaAdapter = new CustomConsultaAdapter(getActivity(),ConsultaInfraccion.unalistaConsultas);
 
-        // Set the adapter
+        // Seteo del adapter
         mListView = (ListView) view.findViewById(android.R.id.list);
         mListView.setAdapter(customConsultaAdapter);
 
@@ -118,7 +104,6 @@ public class fragment_historico extends Fragment {
             textViewb.setTextSize(22);
             textViewc.setText(idTicket);
             textViewc.setTextSize(22);
-
 
             return convertView;
         }

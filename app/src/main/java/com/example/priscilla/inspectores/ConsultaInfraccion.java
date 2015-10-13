@@ -2,6 +2,7 @@ package com.example.priscilla.inspectores;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -87,7 +88,8 @@ public class ConsultaInfraccion extends ActionBarActivity
         setContentView(R.layout.activity_consulta_infraccion);
 
         Bundle unBundle = getIntent().getExtras();
-        if (unBundle != null){
+        if (unBundle != null)
+        {
             userLogged=unBundle.getString("UserLoged");
             tokenSession=unBundle.getString("tokenSession");
             System.out.println("consulta" + tokenSession);
@@ -104,7 +106,6 @@ public class ConsultaInfraccion extends ActionBarActivity
     }
 
     public String getTokenSession(){
-
         return tokenSession;
     }
 
@@ -113,7 +114,8 @@ public class ConsultaInfraccion extends ActionBarActivity
         // cambio hacia el fragment seleccionado
         Fragment  fragment = null;
         dialog_logout dialog = null;
-        switch (position) {
+        switch (position)
+        {
             case 0:
                 fragment = new fragment_consulta();
                 mTitle = getString(R.string.title_section1);
@@ -132,10 +134,7 @@ public class ConsultaInfraccion extends ActionBarActivity
                     .replace(R.id.container, fragment)
                     .addToBackStack(mTitle.toString())
                     .commit();
-
         }
-
-
     }
     public void showDialog() {
         dialog_logout newFragment = dialog_logout.newInstance(R.string.desea_cerrar_sesión);
@@ -146,7 +145,6 @@ public class ConsultaInfraccion extends ActionBarActivity
         Intent openIntent = new Intent(this, MainActivity.class);
         openIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(openIntent);
-
     }
 
     public void doNegativeClick() {
@@ -156,6 +154,14 @@ public class ConsultaInfraccion extends ActionBarActivity
 
     public void consulta(String matricula){
         this.matricula = matricula;
+
+       //Datos para actualizar en Base de datos
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTimeStamp = dateFormat.format(new Date());
+
+        DBManager manager = new DBManager(this);
+        manager.insertar(matricula,currentTimeStamp);
+
         WstConsulta unwstConsulta = new WstConsulta();
         unwstConsulta.execute(matricula);
 
@@ -194,9 +200,6 @@ public class ConsultaInfraccion extends ActionBarActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -209,17 +212,11 @@ public class ConsultaInfraccion extends ActionBarActivity
     /**
      * A placeholder fragment containing a simple view.
      */
+    /*
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -245,8 +242,7 @@ public class ConsultaInfraccion extends ActionBarActivity
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
-
-
+*/
 
     private class WstConsulta extends AsyncTask<String, Integer, Boolean> {
 
@@ -277,7 +273,8 @@ public class ConsultaInfraccion extends ActionBarActivity
                     dateTimeEndTicket = consultaResponse.getString("dateTimeTicket");
                     System.out.println(dateTimeEndTicket);
 
-                    if (dateTimeEndTicket != "null"){
+                    if (dateTimeEndTicket != "null")
+                    {
 
                         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date dTConsulta = fmt.parse(dateTimeConsulta);
@@ -297,13 +294,12 @@ public class ConsultaInfraccion extends ActionBarActivity
                         }
 
                     }
-
+                    else{
+                        multa=true;
+                    }
                     resultado = true;
-
                 } else {
-
                     resultado = false;
-
                 }
 
             } catch (Exception ex) {
@@ -326,9 +322,7 @@ public class ConsultaInfraccion extends ActionBarActivity
         @Override
         protected void onProgressUpdate(Integer... progress){
             super.onProgressUpdate(progress);
-
             progressDialog = ProgressDialog.show(ConsultaInfraccion.this,"Espere","Consultando");
-
         }
 
         @Override
@@ -380,16 +374,13 @@ public class ConsultaInfraccion extends ActionBarActivity
                         String unaDateTime = historicoResponse.getJSONObject(i).getString("fechaHoraConsulta");
                         String unamatricula = historicoResponse.getJSONObject(i).getString("matricula");
                         Consulta unaConsulta = new Consulta(unidTicket,unaDateTime,unamatricula);
-
                         unalistaConsultas.add(unaConsulta);
                     }
 
                     resultado = true;
 
                 } else {
-
                     resultado = false;
-
                 }
 
             } catch (Exception ex) {
@@ -405,7 +396,6 @@ public class ConsultaInfraccion extends ActionBarActivity
             progressDialog = new ProgressDialog(ConsultaInfraccion.this);
             progressDialog.setCancelable(true);
             progressDialog.setIndeterminate(true);
-
         }
 
 
@@ -413,7 +403,6 @@ public class ConsultaInfraccion extends ActionBarActivity
         protected void onProgressUpdate(Integer... progress){
             super.onProgressUpdate(progress);
             progressDialog = ProgressDialog.show(ConsultaInfraccion.this,"Espere","Consultando");
-
         }
 
         @Override
@@ -421,7 +410,6 @@ public class ConsultaInfraccion extends ActionBarActivity
             progressDialog.dismiss();
 
             if (result){
-
                 Fragment  fragment = null;
                 fragment = new fragment_historico();
                 if (fragment != null){
@@ -430,12 +418,10 @@ public class ConsultaInfraccion extends ActionBarActivity
                             .replace(R.id.container, fragment)
                             .addToBackStack(mTitle.toString())
                             .commit();
-
                 }
 
             }
 
         }
     }
-
 }
